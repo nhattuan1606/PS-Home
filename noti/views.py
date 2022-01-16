@@ -23,9 +23,10 @@ class CreateNotification(APIView):
         return Response(data=None)
 
 
-class DeleteNotification(APIView):
+class ReturnNotification(APIView):
     def post(self, request):
-        Noti.objects.get(id=request.data['id']).delete()
+        noti = Noti.objects.get(id=request.data['id'])
+        noti.approve = int(request.data['check'])
         return Response(data=None)
         # noti = Noti.objects.get(id=request.data['id'])
         # return Response(data=NotiSerializer(noti).data, status=status.HTTP_200_OK)
@@ -33,4 +34,4 @@ class DeleteNotification(APIView):
 
 class GetCount(APIView):
     def get(self, request):
-        return Response({"count": Noti.objects.all().count()}, status=status.HTTP_200_OK)
+        return Response({"count": Noti.objects.filter(approve=0).count()}, status=status.HTTP_200_OK)

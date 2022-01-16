@@ -8,3 +8,4 @@ class Noti(models.Model):
     notification = models.CharField(max_length=30, null=True, blank=True)
     quantity = models.IntegerField(null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
+    approve = models.IntegerField(default=0)

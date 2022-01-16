@@ -62,7 +62,7 @@ class ChangePassword(APIView):
 class MoreMonney(APIView):
     def post(self, request):
         acc = InforUser.objects.get(username=request.user.username)
-        acc.monney = request.data['moremonney']
+        acc.monney = int(request.data['moremonney'])
         acc.save()
         return Response(data=None, status=status.HTTP_200_OK)
 
@@ -84,6 +84,6 @@ class DeleteUser(APIView):
 class MoreMoneyUser(APIView):
     def post(self, request):
         user = InforUser.objects.get(username=request.data['username'])
-        user.monney = request.data["moremonney"]
+        user.monney = int(request.data['moremonney'])
         user.save()
         return Response({"Status": "Complete"}, status=status.HTTP_200_OK)
