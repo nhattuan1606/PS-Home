@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'food',
     'noti',
     'statistical',
+    'chat',
 ]
 
 MIDDLEWARE = [
