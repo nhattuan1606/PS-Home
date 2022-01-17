@@ -62,6 +62,22 @@ class ChangePassword(APIView):
         return Response({"Status": "Complete"}, status=status.HTTP_200_OK)
 
 
+class ChangePasswordAdmin(APIView):
+    def post(self, request):
+        user = User.objects.get(username=request.data['username'])
+
+        # Thay dổi ở bảng auth_user sẵn có của django
+        user.set_password(request.data['newPassword'])
+        user.save()
+
+        # Thay đổi ở bảng InforUser
+        user = InforUser.objects.get(username=request.data['username'])
+        user.password = request.data['newPassword']
+        user.save()
+
+        return Response({"Status": "Complete"}, status=status.HTTP_200_OK)
+
+
 class MoreMonney(APIView):
     def post(self, request):
         acc = InforUser.objects.get(username=request.user.username)

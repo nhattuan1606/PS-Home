@@ -7,5 +7,5 @@ from datetime import datetime
 class ChatSerializers(serializers.ModelSerializer):
     class Meta :
         model = Message
-        fields = ('id','username','chat','seen','date','checkUser')
+        fields = ('id', 'username', 'chat', 'seen', 'date', 'checkUser')
 
