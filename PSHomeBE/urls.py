@@ -22,4 +22,5 @@ urlpatterns = [
     path('food/', include('food.urls')),
     path('noti/', include('noti.urls')),
     path('stat/', include('statistical.urls')),
+    path('chat/', include('chat.urls')),
 ]
