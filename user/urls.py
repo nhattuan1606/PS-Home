@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import CustomTokenObtainPairView, GetUser, ChangePassword, MoreMonney, GetAllUser, RegisterAcc, \
-    DeleteUser, MoreMoneyUser
+    DeleteUser, MoreMoneyUser, LockUser
 
 
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path('createuser', RegisterAcc.as_view(), name='create_user'),
     path('deleteuser', DeleteUser.as_view(), name='delete_user'),
     path('moremonneyuser', MoreMoneyUser.as_view(), name='more_money_user'),
+    path('lockuser', LockUser.as_view(), name='lock_user'),
 ]

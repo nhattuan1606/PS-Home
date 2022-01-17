@@ -7,7 +7,9 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super(CustomTokenObtainPairSerializer, self).validate(attrs)
         current_user = InforUser.objects.get(username=self.user.username)
-        data.update({"monney": current_user.monney})
+        if current_user.is_locked:
+            return {"status": "lock"}
+        data.update({"monney": current_user.monney, "status": "ok"})
         return data
 
 

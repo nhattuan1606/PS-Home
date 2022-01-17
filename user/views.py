@@ -42,12 +42,15 @@ class RegisterAcc(APIView):
 
 class ChangePassword(APIView):
     def post(self, request):
+        user = User.objects.get(username=request.user.username)
+        if not user.check_password(request.data['oldpassword']):
+            return Response({"status": 0}, status=status.HTTP_200_OK)
+
         new_pass = NewPassword(data=request.data)
         if not new_pass.is_valid():
-            return Response({"Status": "Wrong data"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"status": "Wrong data"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Thay dổi ở bảng auth_user sẵn có của django
-        user = User.objects.get(username=request.user.username)
         user.set_password(new_pass.data['newpassword'])
         user.save()
 
@@ -69,7 +72,7 @@ class MoreMonney(APIView):
 
 class GetAllUser(APIView):
     def get(self, request):
-        all_user = InforUser.objects.all()
+        all_user = InforUser.objects.all().exclude(username="admin")
         return Response(data=InforUserSerializer(all_user, many=True).data, status=status.HTTP_200_OK)
 
 
@@ -87,3 +90,11 @@ class MoreMoneyUser(APIView):
         user.monney = int(request.data['moremonney'])
         user.save()
         return Response({"Status": "Complete"}, status=status.HTTP_200_OK)
+
+
+class LockUser(APIView):
+    def post(self, request):
+        user = InforUser.objects.get(username=request.data['username'])
+        user.is_locked = not user.is_locked
+        user.save()
+        return Response(data=None)
